@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --primary: #B91C1C; /* Deep Red for Pentester Vibe */
-            --secondary: #EF4444; /* Bright Red Accent */
-            --accent: #FCA5A5; /* Light Red */
-            --background: #1F2937; /* Dark Gray Background */
+            --primary: #B91C1C;
+            --secondary: #EF4444;
+            --accent: #FCA5A5;
+            --background: #1F2937;
             --text-light: #F3F4F6;
             --text-dark: #1F2937;
             --glass: rgba(255, 75, 75, 0.1);
@@ -220,6 +220,10 @@
             padding: 30px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: center;
         }
 
         .about-card::before {
@@ -231,6 +235,39 @@
             height: 100%;
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(248, 113, 113, 0.1));
             z-index: -1;
+        }
+
+        .about-image-container {
+            flex: 0 0 auto;
+            width: clamp(300px, 35vw, 350px);
+            height: clamp(300px, 35vw, 350px);
+            overflow: hidden;
+            border-radius: 50%;
+            border: 3px solid var(--secondary);
+            box-shadow: 0 8px 30px var(--shadow);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .about-image-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px var(--glow);
+        }
+
+        .about-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            border-radius: 50%;
+        }
+
+        .about-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .about-text {
@@ -246,10 +283,85 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .skills-grid, .projects-grid, .certifications-grid, .testimonials-grid {
+        .skills-grid, .projects-grid, .certifications-grid, .community-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
+        }
+
+        .community-container {
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .community-slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .community-card {
+            flex: 0 0 100%;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--secondary);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            animation: slideIn 0.5s forwards;
+        }
+
+        .community-image-container {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 16 / 9;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .community-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .community-notes {
+            color: var(--text-light);
+            font-size: 1em;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .community-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .community-btn {
+            background: var(--glass);
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .community-btn:hover {
+            background: var(--secondary);
+            color: var(--text-light);
         }
 
         .card {
@@ -522,9 +634,24 @@
                 font-size: clamp(2.5rem, 6vw, 4rem);
             }
 
-            .skills-grid, .projects-grid, .certifications-grid, .testimonials-grid {
+            .skills-grid, .projects-grid, .certifications-grid, .community-grid {
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                 gap: 20px;
+            }
+
+            .about-card {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-image-container {
+                width: clamp(240px, 30vw, 280px);
+                height: clamp(240px, 30vw, 280px);
+                margin-bottom: 20px;
+            }
+
+            .community-container {
+                max-width: 600px;
             }
         }
 
@@ -563,14 +690,24 @@
             .contact-section {
                 padding: 30px;
             }
+
+            .about-image-container {
+                width: clamp(200px, 25vw, 240px);
+                height: clamp(200px, 25vw, 240px);
+            }
+
+            .community-container {
+                max-width: 100%;
+                padding: 0 15px;
+            }
         }
 
         @media (max-width: 480px) {
-            .skills-grid, .projects-grid, .certifications-grid, .testimonials-grid {
+            .skills-grid, .projects-grid, .certifications-grid, .community-grid {
                 grid-template-columns: 1fr;
             }
 
-            .card, .about-card, .testimonial-card {
+            .card, .about-card, .testimonial-card, .community-card {
                 padding: 20px;
             }
 
@@ -586,6 +723,15 @@
             .social-link {
                 font-size: 1.8em;
             }
+
+            .about-image-container {
+                width: clamp(180px, 20vw, 200px);
+                height: clamp(180px, 20vw, 200px);
+            }
+
+            .community-image-container {
+                max-width: 100%;
+            }
         }
 
         @keyframes fadeInUp {
@@ -598,13 +744,13 @@
         }
     </style>
 </head>
-<body>
+<body class="light-mode">
     <div class="tech-background">
         <div class="particles" id="particles"></div>
     </div>
 
     <div class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
     </div>
 
     <nav class="nav-bar">
@@ -613,6 +759,7 @@
         <div class="nav-item" data-section="skills">Skills</div>
         <div class="nav-item" data-section="projects">Projects</div>
         <div class="nav-item" data-section="testimonials">Testimonials</div>
+        <div class="nav-item" data-section="community">Community</div>
         <div class="nav-item" data-section="certifications">Certifications</div>
         <div class="nav-item" data-section="contact">Contact</div>
     </nav>
@@ -627,13 +774,18 @@
             <section class="section" id="about">
                 <h2 class="section-title">About Me</h2>
                 <div class="about-card fade-in-up">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-user-secret"></i></div>
-                        <h3 class="card-title">Koiki Olabode Williams</h3>
+                    <div class="about-image-container">
+                        <img src="sniper.png" alt="Koiki Olabode Williams" class="about-image">
                     </div>
-                    <p class="about-text">
-                        I'm Cyber Sniper, a seasoned <span class="highlight-text">Cybersecurity Analyst</span> and <span class="highlight-text">Ethical Hacker</span> with a passion for securing digital landscapes. Specializing in <span class="highlight-text">penetration testing, digital forensics, and application security</span>, I identify vulnerabilities and fortify systems against threats. As a <span class="highlight-text">Security Consultant</span>, I provide strategic guidance to organizations, ensuring robust protection. My mission is to outsmart cyber adversaries with precision and expertise, safeguarding data with a sniper's focus.
-                    </p>
+                    <div class="about-content">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-user-secret"></i></div>
+                            <h3 class="card-title">Koiki Olabode Williams</h3>
+                        </div>
+                        <p class="about-text">
+                            I'm Cyber Sniper, a seasoned <span class="highlight-text">Cybersecurity Analyst</span> and <span class="highlight-text">Ethical Hacker</span> with a passion for securing digital landscapes. Specializing in <span class="highlight-text">penetration testing, digital forensics, and application security</span>, I identify vulnerabilities and fortify systems against threats. As a <span class="highlight-text">Security Consultant</span>, I provide strategic guidance to organizations, ensuring robust protection. My mission is to outsmart cyber adversaries with precision and expertise, safeguarding data with a sniper's focus.
+                        </p>
+                    </div>
                 </div>
             </section>
 
@@ -758,6 +910,54 @@
                 </div>
             </section>
 
+            <section class="section" id="community">
+                <h2 class="section-title">Community Involvement</h2>
+                <div class="community-container">
+                    <div class="community-slider" id="communitySlider">
+                        <div class="community-card fade-in-up">
+                            <div class="community-image-container">
+                                <img src="speaker.jpg" alt="Speaking at iiMONEX 2024" class="community-image">
+                            </div>
+                            <p class="community-notes">
+                                <strong>Speaking at iiMONEX 2024</strong><br>
+                                Koiki Olabode Williams delivered a keynote address at the Cybersecurity Summit 2024 in Lagos, Nigeria, sharing insights on emerging threats in cloud security and effective mitigation strategies. His engaging presentation captivated over 500 attendees, fostering discussions on proactive cybersecurity measures.
+                            </p>
+                        </div>
+                        <div class="community-card fade-in-up">
+                            <div class="community-image-container">
+                                <img src="panelist.jpg" alt="Panelist at iiMONEX" class="community-image">
+                            </div>
+                            <p class="community-notes">
+                                <strong>Panelist at iiMONEX 2025</strong><br>
+                                As a panelist at iiMONEX 2025, Koiki discussed the role of ethical hacking in modern cybersecurity frameworks. His expertise sparked meaningful dialogue among industry leaders, emphasizing the importance of ethical practices in securing digital infrastructures.
+                            </p>
+                        </div>
+                        <div class="community-card fade-in-up">
+                            <div class="community-image-container">
+                                <img src="THEHACKERSSECRETCONFERENCE.png" alt="The Hackers Secret Conference" class="community-image">
+                            </div>
+                            <p class="community-notes">
+                                <strong>Moderating at The Hackers Secret Conference 2025</strong><br>
+                                Koiki moderated a session at the The Hackers Secret Conference 2025, guiding a panel of experts in a discussion on AI-driven cybersecurity threats. His ability to steer complex conversations ensured a dynamic and informative session for a global audience.
+                            </p>
+                        </div>
+                        <div class="community-card fade-in-up">
+                            <div class="community-image-container">
+                                <img src="sniper class.jpg" alt="Teaching at CODAR TECH AFRICA" class="community-image">
+                            </div>
+                            <p class="community-notes">
+                                <strong>Tutoring Session</strong><br>
+                                As an instructor in Cyber Security, Koiki mentors aspiring cybersecurity professionals, teaching advanced penetration testing and digital forensics. His hands-on approach has empowered over 200 students to build careers in cybersecurity across Africa.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="community-controls">
+                        <button class="community-btn" onclick="prevCommunitySlide()"><i class="fas fa-chevron-left"></i></button>
+                        <button class="community-btn" onclick="nextCommunitySlide()"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
             <section class="section" id="certifications">
                 <h2 class="section-title">Certifications</h2>
                 <div class="certifications-grid">
@@ -802,7 +1002,7 @@
                         <button class="btn" onclick="sendMessage()">Send Message <i class="fas fa-paper-plane ml-2"></i></button>
                     </div>
                     <div class="social-links">
-                        <a href="https://wa.me/+234 904 426 2176" target="_blank" class="social-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://wa.me/+2349044262176" target="_blank" class="social-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                         <a href="http://linkedin.com/in/olabode-williams-018848301" target="_blank" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                         <a href="mailto:Cybersniper7016@gmail.com" class="social-link" title="Email"><i class="fas fa-envelope"></i></a>
                     </div>
@@ -820,6 +1020,7 @@
             createParticles();
             setupEventListeners();
             setupTestimonialSlider();
+            setupCommunitySlider();
         }
 
         function createParticles() {
@@ -841,6 +1042,10 @@
         const testimonials = document.querySelectorAll('.testimonial-card');
         const totalTestimonials = testimonials.length;
 
+        let currentCommunitySlide = 0;
+        const communitySlides = document.querySelectorAll('.community-card');
+        const totalCommunitySlides = communitySlides.length;
+
         function setupTestimonialSlider() {
             testimonials[currentTestimonial].style.opacity = '1';
             setInterval(nextTestimonial, 5000);
@@ -860,6 +1065,25 @@
             document.getElementById('testimonialsSlider').style.transform = `translateX(-${currentTestimonial * 100}%)`;
         }
 
+        function setupCommunitySlider() {
+            communitySlides[currentCommunitySlide].style.opacity = '1';
+            setInterval(nextCommunitySlide, 5000);
+        }
+
+        function nextCommunitySlide() {
+            communitySlides[currentCommunitySlide].style.opacity = '0';
+            currentCommunitySlide = (currentCommunitySlide + 1) % totalCommunitySlides;
+            communitySlides[currentCommunitySlide].style.opacity = '1';
+            document.getElementById('communitySlider').style.transform = `translateX(-${currentCommunitySlide * 100}%)`;
+        }
+
+        function prevCommunitySlide() {
+            communitySlides[currentCommunitySlide].style.opacity = '0';
+            currentCommunitySlide = (currentCommunitySlide - 1 + totalCommunitySlides) % totalCommunitySlides;
+            communitySlides[currentCommunitySlide].style.opacity = '1';
+            document.getElementById('communitySlider').style.transform = `translateX(-${currentCommunitySlide * 100}%)`;
+        }
+
         function setupEventListeners() {
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.addEventListener('click', () => {
@@ -873,7 +1097,7 @@
             });
 
             document.addEventListener('scroll', () => {
-                const elements = document.querySelectorAll('.card, .about-card, .section-title, .contact-section, .testimonial-card');
+                const elements = document.querySelectorAll('.card, .about-card, .section-title, .contact-section, .testimonial-card, .community-card');
                 elements.forEach(element => {
                     const rect = element.getBoundingClientRect();
                     if (rect.top < window.innerHeight * 0.85 && rect.bottom > 0) {
@@ -883,7 +1107,7 @@
             });
 
             if ('ontouchstart' in window) {
-                document.querySelectorAll('.btn, .social-link, .testimonial-btn').forEach(element => {
+                document.querySelectorAll('.btn, .social-link, .testimonial-btn, .community-btn').forEach(element => {
                     element.addEventListener('touchstart', function(e) {
                         e.stopPropagation();
                         this.style.transform = 'scale(0.95)';
@@ -907,7 +1131,7 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
-            const phoneNumber = '+234XXXXXXXXXX';
+            const phoneNumber = '+2349044262176';
 
             if (name && email && message) {
                 const whatsappMessage = `Hello Cyber Sniper, I'm ${name} (${email}). ${message}`;
